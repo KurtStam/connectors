@@ -16,9 +16,7 @@
   "inputDataType" : "json",
   "outputDataType" : "json",
   "componentOptions" : [ "dataSource" ],
-  "endpointOptions" : [ "procedureName", "template", "batch", "noop" ],
-  "endpointValues" : {},
-
+  "endpointOptions" : [ "procedureName", "template" ],
   "connectorProperties" : {
     "user" : {
       "kind" : "property",

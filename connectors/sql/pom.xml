@@ -30,6 +30,7 @@
 
   <modules>
     <module>sql-common</module>
+    <module>sql-connector</module>
     <module>sql-stored-connector</module>
     <module>sql-stored-start-connector</module>
   </modules>

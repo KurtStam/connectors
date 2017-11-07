@@ -1,0 +1,110 @@
+{
+  "component":{
+    "kind":"component",
+    "baseScheme":"sql",
+    "scheme":"sql-connector",
+    "syntax":"sql-connector:query",
+    "title":"SqlConnector",
+    "description":"SQL Connector perform CRUD operations on a database",
+    "label":"sql",
+    "deprecated":false,
+    "async":false,
+    "consumerOnly":true,
+    "lenientProperties":false,
+    "javaType":"io.syndesis.connector.SqlConnectorComponent",
+    "groupId":"io.syndesis",
+    "artifactId":"sql-connector",
+    "version":"0.5-SNAPSHOT"
+  },
+  "componentProperties":{
+    "dataSource":{
+      "kind":"property",
+      "displayName":"Data Source",
+      "group":"common",
+      "required":false,
+      "type":"object",
+      "javaType":"javax.sql.DataSource",
+      "deprecated":false,
+      "secret":false,
+      "description":"Sets the DataSource to use to communicate with the database."
+    }
+  },
+  "properties":{
+    "noop":{
+      "kind":"parameter",
+      "displayName":"Noop",
+      "group":"producer",
+      "label":"producer",
+      "required":false,
+      "type":"boolean",
+      "javaType":"boolean",
+      "deprecated":false,
+      "secret":false,
+      "defaultValue":false,
+      "description":"If set will ignore the results of the SQL query and use the existing IN message as the OUT message for the continuation of processing"
+    }
+  },
+  "connectorProperties":{
+    "url":{
+      "kind":"property",
+      "displayName":"Connection URL",
+      "group":"producer",
+      "label":"common",
+      "required":true,
+      "type":"string",
+      "javaType":"java.lang.String",
+      "deprecated":false,
+      "secret":false,
+      "defaultValue":"jdbc:postgresql:database",
+      "description":"JDBC URL of the database"
+    },
+    "user":{
+      "kind":"property",
+      "displayName":"Username",
+      "group":"security",
+      "label":"common,security",
+      "required":true,
+      "type":"string",
+      "javaType":"java.lang.String",
+      "deprecated":false,
+      "secret":false,
+      "description":"Username for the database connection"
+    },
+    "password":{
+      "kind":"property",
+      "displayName":"Password",
+      "group":"security",
+      "label":"common,security",
+      "required":true,
+      "type":"string",
+      "javaType":"java.lang.String",
+      "deprecated":false,
+      "secret":true,
+      "description":"Password for the database connection"
+    },
+    "schema":{
+      "kind":"property",
+      "displayName":"Schema",
+      "group":"producer",
+      "label":"common",
+      "required":false,
+      "type":"string",
+      "javaType":"java.lang.String",
+      "deprecated":false,
+      "secret":false,
+      "description":"Database schema"
+    },
+    "catalog":{
+      "kind":"property",
+      "displayName":"Catalog",
+      "group":"producer",
+      "label":"common",
+      "required":false,
+      "type":"string",
+      "javaType":"java.lang.String",
+      "deprecated":false,
+      "secret":false,
+      "description":"Database catalog"
+    }
+  }
+}

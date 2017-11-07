@@ -51,8 +51,9 @@
       <artifactId>camel-connector</artifactId>
     </dependency>
     <dependency>
-        <groupId>io.syndedis</groupId>
-        <artifactId></artifactId>
+        <groupId>io.syndesis</groupId>
+        <artifactId>sql-common</artifactId>
+        <version>${project.version}</version>
     </dependency>
 
     <!-- camel and spring boot compiler plugins -->

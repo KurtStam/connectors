@@ -21,6 +21,8 @@ import java.util.Map;
 import org.apache.camel.Endpoint;
 import org.apache.camel.component.connector.DefaultConnectorComponent;
 
+import io.syndesis.connector.sql.stored.SqlStoredConnectorVerifierExtension;
+
 /**
  * Camel SqlStoredConnector connector
  */
@@ -28,7 +30,7 @@ public class SqlConnectorComponent extends DefaultConnectorComponent {
 
     public SqlConnectorComponent() {
         super("sql-connector", SqlConnectorComponent.class.getName());
-//        registerExtension(SqlStoredConnectorVerifierExtension::new);
+        registerExtension(SqlStoredConnectorVerifierExtension::new);
 //        registerExtension(SqlStoredConnectorMetaDataExtension::new);
     }
 

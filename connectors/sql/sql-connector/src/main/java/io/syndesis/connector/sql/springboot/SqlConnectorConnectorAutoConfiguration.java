@@ -1,11 +1,11 @@
-package io.syndesis.connector.springboot;
+package io.syndesis.connector.sql.springboot;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import javax.annotation.PostConstruct;
-import io.syndesis.connector.SqlConnectorComponent;
+import io.syndesis.connector.sql.SqlConnectorComponent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.connector.ConnectorCustomizer;
 import org.apache.camel.spi.HasId;

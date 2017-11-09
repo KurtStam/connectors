@@ -1,1 +1,1 @@
-class=io.syndesis.connector.SqlConnectorComponent
+class=io.syndesis.connector.sql.SqlConnectorComponent

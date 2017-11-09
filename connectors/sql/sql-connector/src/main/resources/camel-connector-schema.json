@@ -11,7 +11,7 @@
     "async":false,
     "consumerOnly":true,
     "lenientProperties":false,
-    "javaType":"io.syndesis.connector.SqlConnectorComponent",
+    "javaType":"io.syndesis.connector.sql.SqlConnectorComponent",
     "groupId":"io.syndesis",
     "artifactId":"sql-connector",
     "version":"0.5-SNAPSHOT"
@@ -30,81 +30,74 @@
     }
   },
   "properties":{
-    "noop":{
+    "schedulerPeriod":{
       "kind":"parameter",
-      "displayName":"Noop",
-      "group":"producer",
-      "label":"producer",
+      "displayName":"Period",
+      "group":"consumer",
       "required":false,
-      "type":"boolean",
-      "javaType":"boolean",
+      "type":"integer",
+      "javaType":"long",
       "deprecated":false,
       "secret":false,
-      "defaultValue":false,
-      "description":"If set will ignore the results of the SQL query and use the existing IN message as the OUT message for the continuation of processing"
+      "defaultValue":1000,
+      "description":"Delay in milli seconds between scheduling (executing)"
     }
   },
   "connectorProperties":{
-    "url":{
-      "kind":"property",
-      "displayName":"Connection URL",
-      "group":"producer",
-      "label":"common",
-      "required":true,
-      "type":"string",
-      "javaType":"java.lang.String",
-      "deprecated":false,
-      "secret":false,
-      "defaultValue":"jdbc:postgresql:database",
-      "description":"JDBC URL of the database"
-    },
     "user":{
       "kind":"property",
-      "displayName":"Username",
-      "group":"security",
-      "label":"common,security",
-      "required":true,
-      "type":"string",
-      "javaType":"java.lang.String",
-      "deprecated":false,
-      "secret":false,
-      "description":"Username for the database connection"
-    },
-    "password":{
-      "kind":"property",
-      "displayName":"Password",
-      "group":"security",
-      "label":"common,security",
-      "required":true,
+      "displayName":"DB User Name",
+      "group":"common",
+      "required":false,
       "type":"string",
       "javaType":"java.lang.String",
       "deprecated":false,
       "secret":true,
-      "description":"Password for the database connection"
+      "description":"DB User Name"
+    },
+    "password":{
+      "kind":"property",
+      "displayName":"DB User Password",
+      "group":"common",
+      "required":false,
+      "type":"string",
+      "javaType":"java.lang.String",
+      "deprecated":false,
+      "secret":true,
+      "description":"DB User Password"
+    },
+    "url":{
+      "kind":"property",
+      "displayName":"DB URL",
+      "group":"common",
+      "required":false,
+      "type":"string",
+      "javaType":"java.lang.String",
+      "deprecated":false,
+      "secret":false,
+      "description":"DB URL"
     },
     "schema":{
       "kind":"property",
-      "displayName":"Schema",
-      "group":"producer",
-      "label":"common",
+      "displayName":"DB Schema",
+      "group":"common",
       "required":false,
       "type":"string",
       "javaType":"java.lang.String",
       "deprecated":false,
       "secret":false,
-      "description":"Database schema"
+      "description":"DB Schema"
     },
     "catalog":{
       "kind":"property",
-      "displayName":"Catalog",
-      "group":"producer",
-      "label":"common",
+      "displayName":"DB Catalog",
+      "group":"common",
       "required":false,
       "type":"string",
       "javaType":"java.lang.String",
       "deprecated":false,
       "secret":false,
-      "description":"Database catalog"
+      "description":"DB Catalog"
     }
   }
 }

@@ -1,4 +1,4 @@
-package io.syndesis.connector.springboot;
+package io.syndesis.connector.sql.springboot;
 
 import javax.annotation.Generated;
 import javax.sql.DataSource;
@@ -16,28 +16,27 @@ public class SqlConnectorConnectorConfigurationCommon {
      */
     private DataSource dataSource;
     /**
-     * If set will ignore the results of the SQL query and use the existing IN
-     * message as the OUT message for the continuation of processing
+     * Delay in milli seconds between scheduling (executing)
      */
-    private boolean noop = false;
+    private long schedulerPeriod = 1000L;
     /**
-     * JDBC URL of the database
-     */
-    private String url = "jdbc:postgresql:database";
-    /**
-     * Username for the database connection
+     * DB User Name
      */
     private String user;
     /**
-     * Password for the database connection
+     * DB User Password
      */
     private String password;
     /**
-     * Database schema
+     * DB URL
+     */
+    private String url;
+    /**
+     * DB Schema
      */
     private String schema;
     /**
-     * Database catalog
+     * DB Catalog
      */
     private String catalog;
 
@@ -49,20 +48,12 @@ public class SqlConnectorConnectorConfigurationCommon {
         this.dataSource = dataSource;
     }
 
-    public boolean isNoop() {
-        return noop;
+    public long getSchedulerPeriod() {
+        return schedulerPeriod;
     }
 
-    public void setNoop(boolean noop) {
-        this.noop = noop;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setSchedulerPeriod(long schedulerPeriod) {
+        this.schedulerPeriod = schedulerPeriod;
     }
 
     public String getUser() {
@@ -79,6 +70,14 @@ public class SqlConnectorConnectorConfigurationCommon {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getSchema() {

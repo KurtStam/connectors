@@ -1,4 +1,4 @@
-package io.syndesis.connector.springboot;
+package io.syndesis.connector.sql.springboot;
 
 import java.util.HashMap;
 import java.util.Map;

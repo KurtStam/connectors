@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.syndesis.connector.sql.stored;
+package io.syndesis.connector.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,6 +23,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.camel.component.extension.ComponentVerifierExtension.Result;
+import org.apache.camel.component.extension.ComponentVerifierExtension.Scope;
+import org.apache.camel.component.extension.ComponentVerifierExtension.VerificationError;
 import org.apache.camel.component.extension.verifier.DefaultComponentVerifierExtension;
 import org.apache.camel.component.extension.verifier.ResultBuilder;
 import org.apache.camel.component.extension.verifier.ResultErrorBuilder;
@@ -32,24 +35,14 @@ import org.slf4j.LoggerFactory;
 
 import io.syndesis.connector.sql.DatabaseProduct;
 
-public class SqlStoredConnectorVerifierExtension extends DefaultComponentVerifierExtension {
+public class SqlVerifier {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SqlStoredConnectorVerifierExtension.class);
-
-    public SqlStoredConnectorVerifierExtension() {
-        super("sql-stored-connector");
-    }
-
-    public SqlStoredConnectorVerifierExtension(String scheme) {
-        super(scheme);
-    }
+    private static final Logger LOG = LoggerFactory.getLogger(SqlVerifier.class);
 
     // *********************************
     // Parameters validation
     // *********************************
-
-    @Override
-    protected Result verifyParameters(Map<String, Object> parameters) {
+    public Result verifyParameters(Map<String, Object> parameters) {
         ResultBuilder builder = ResultBuilder.withStatusAndScope(Result.Status.OK, Scope.PARAMETERS)
             .error(ResultErrorHelper.requiresOption("url", parameters))
             .error(ResultErrorHelper.requiresOption("user", parameters))
@@ -112,8 +105,7 @@ public class SqlStoredConnectorVerifierExtension extends DefaultComponentVerifie
     // *********************************
     // Connectivity validation
     // *********************************
-    @Override
-    protected Result verifyConnectivity(Map<String, Object> parameters) {
+    public Result verifyConnectivity(Map<String, Object> parameters) {
         return ResultBuilder.withStatusAndScope(Result.Status.OK, Scope.CONNECTIVITY)
             .error(parameters, this::verifyCredentials)
             .build();

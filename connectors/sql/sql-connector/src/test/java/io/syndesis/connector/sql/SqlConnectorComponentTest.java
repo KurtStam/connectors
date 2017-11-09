@@ -98,7 +98,7 @@ public class SqlConnectorComponentTest {
             context.addRoutes(new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {
-                    from("sql:SELECT * FROM NAME?dataSource=dataSource")
+                    from("sql-connector:SELECT * FROM NAME?dataSource=dataSource")
                     .process(new Processor() {
                         @Override
                         public void process(Exchange exchange)

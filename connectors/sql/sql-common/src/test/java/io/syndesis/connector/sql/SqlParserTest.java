@@ -67,7 +67,7 @@ public class SqlParserTest {
     }
     
     @Test
-    public void parseInsert() throws JsonProcessingException, JSONException {
+    public void parseInsertIntoAllColumnsOfTheTable() throws JsonProcessingException, JSONException {
         
         SqlParser parser = new SqlParser("INSERT INTO NAME VALUES (:id, :firstname, :lastname)");
         Info info = parser.parse();
@@ -82,16 +82,19 @@ public class SqlParserTest {
     }
 
     @Test
-    public void parseInsert2() throws JsonProcessingException, JSONException {
+    public void parseInsertWithSpecifiedColumnNames() throws JsonProcessingException, JSONException {
         
         SqlParser parser = new SqlParser("INSERT INTO NAME (FIRSTNAME, LASTNAME) VALUES (:firstname, :lastname)");
         Info info = parser.parse();
         Assert.assertEquals("NAME", info.getTableNames().get(0));
         Assert.assertEquals(2, info.getInParams().size());
-        Assert.assertEquals("FIRSTNAME", info.getInParams().get(1).getName());
+        Assert.assertEquals("FIRSTNAME", info.getInParams().get(0).getName());
+        Assert.assertEquals(0, info.getInParams().get(0).getColumnPos());
+        Assert.assertEquals("FIRSTNAME", info.getInParams().get(0).getColumn());
+        Assert.assertEquals("LASTNAME", info.getInParams().get(1).getName());
         Assert.assertEquals(1, info.getInParams().get(1).getColumnPos());
-        Assert.assertEquals("LASTNAME", info.getInParams().get(2).getName());
-        Assert.assertEquals(2, info.getInParams().get(2).getColumnPos());
+        Assert.assertEquals("LASTNAME", info.getInParams().get(1).getColumn());
     }
+
 
 }

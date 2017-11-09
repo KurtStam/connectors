@@ -90,7 +90,8 @@ public class SqlConnectorConnectorAutoConfiguration {
         for (Map.Entry<String, SqlConnectorConnectorConfigurationCommon> entry : configuration
                 .getConfigurations().entrySet()) {
             parameters.clear();
-            SqlConnectorComponent connector = new SqlConnectorComponent();
+            SqlConnectorComponent connector = new SqlConnectorComponent(
+                    entry.getKey());
             connector.setCamelContext(camelContext);
             try {
                 IntrospectionSupport.getProperties(entry.getValue(),

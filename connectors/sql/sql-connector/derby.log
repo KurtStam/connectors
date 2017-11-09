@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Nov 08 16:41:24 EST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-015f-9d94-a11c-00000d7c8f68 
+Thu Nov 09 11:40:21 EST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-015f-a1a7-5f18-00000d7c5358 
 on database directory memory:/Users/kstam/git/rh/syndesis/connectors/connectors/sql/sql-connector/testdb with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/Users/kstam/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
 java.vendor=Oracle Corporation

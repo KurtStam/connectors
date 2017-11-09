@@ -37,7 +37,7 @@ public class SqlParser {
         
             case "INSERT": 
                 info.tableNames.add(sqlArray.get(2));
-                info.inParams.addAll(findInputParams());
+                info.inParams.addAll(findInsertParams(info.tableNames.get(0)));
                 break;
             case "SELECT":
                 info.tableNames.addAll(findTables());
@@ -71,6 +71,29 @@ public class SqlParser {
         return this;
     }
 
+    /* default */ List<Param> findInsertParams(String tableName) {
+        boolean isColumnName = false;
+        List<String> columnNames = new ArrayList<>();
+        for (String word: sqlArray) {
+            if ("VALUES".equals(word)) {
+                isColumnName = false;
+            }
+            if (isColumnName) {
+                columnNames.add(word);
+            }
+            if (tableName.equals(word)) {
+                isColumnName = true; //in the next iteration
+            }
+        }
+        List<Param> params = findInputParams();
+        if (columnNames.size() == params.size()) {
+            for (int i=0; i<params.size(); i++) {
+                params.get(i).setColumn(columnNames.get(i));
+            }
+        }
+        return params;
+    }
+    
     /* default */ List<Param> findInputParams() {
         List<Param> params = new ArrayList<>();
         int i=0;
@@ -122,7 +145,7 @@ public class SqlParser {
                 tables.add(word);
             }
             if ("FROM".equals(word)) {
-                isTable = true;
+                isTable = true; //in the next iteration
             }
             
         }

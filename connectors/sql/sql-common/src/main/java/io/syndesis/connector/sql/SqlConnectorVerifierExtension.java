@@ -23,9 +23,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.camel.component.extension.ComponentVerifierExtension.Result;
-import org.apache.camel.component.extension.ComponentVerifierExtension.Scope;
-import org.apache.camel.component.extension.ComponentVerifierExtension.VerificationError;
 import org.apache.camel.component.extension.verifier.DefaultComponentVerifierExtension;
 import org.apache.camel.component.extension.verifier.ResultBuilder;
 import org.apache.camel.component.extension.verifier.ResultErrorBuilder;
@@ -33,15 +30,22 @@ import org.apache.camel.component.extension.verifier.ResultErrorHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.syndesis.connector.sql.DatabaseProduct;
+public class SqlConnectorVerifierExtension extends DefaultComponentVerifierExtension {
 
-public class SqlVerifier {
+    private static final Logger LOG = LoggerFactory.getLogger(SqlConnectorVerifierExtension.class);
 
-    private static final Logger LOG = LoggerFactory.getLogger(SqlVerifier.class);
+    public SqlConnectorVerifierExtension() {
+        super("sql-connector");
+    }
+
+    public SqlConnectorVerifierExtension(String scheme) {
+        super(scheme);
+    }
 
     // *********************************
     // Parameters validation
     // *********************************
+    @Override
     public Result verifyParameters(Map<String, Object> parameters) {
         ResultBuilder builder = ResultBuilder.withStatusAndScope(Result.Status.OK, Scope.PARAMETERS)
             .error(ResultErrorHelper.requiresOption("url", parameters))
@@ -105,6 +109,7 @@ public class SqlVerifier {
     // *********************************
     // Connectivity validation
     // *********************************
+    @Override
     public Result verifyConnectivity(Map<String, Object> parameters) {
         return ResultBuilder.withStatusAndScope(Result.Status.OK, Scope.CONNECTIVITY)
             .error(parameters, this::verifyCredentials)

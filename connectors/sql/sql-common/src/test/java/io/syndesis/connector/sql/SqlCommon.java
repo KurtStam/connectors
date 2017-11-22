@@ -26,7 +26,7 @@ import java.util.Properties;
 
 public class SqlCommon {
 
-    public Connection setupConnectionAndStoredProcedure(Connection connection, Properties properties) throws Exception {
+    public Connection setupConnection(Connection connection, Properties properties) throws Exception {
 
         InputStream is = SqlCommon.class.getClassLoader().getResourceAsStream("application.properties");
         properties.load(is);

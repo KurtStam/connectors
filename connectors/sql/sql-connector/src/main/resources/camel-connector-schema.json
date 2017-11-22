@@ -9,7 +9,7 @@
     "label":"sql",
     "deprecated":false,
     "async":false,
-    "consumerOnly":true,
+    "producerOnly":true,
     "lenientProperties":false,
     "javaType":"io.syndesis.connector.sql.SqlConnectorComponent",
     "groupId":"io.syndesis",
@@ -30,18 +30,7 @@
     }
   },
   "properties":{
-    "schedulerPeriod":{
-      "kind":"parameter",
-      "displayName":"Period",
-      "group":"consumer",
-      "required":false,
-      "type":"integer",
-      "javaType":"long",
-      "deprecated":false,
-      "secret":false,
-      "defaultValue":1000,
-      "description":"Delay in milli seconds between scheduling (executing)"
-    }
+    
   },
   "connectorProperties":{
     "user":{
@@ -98,6 +87,17 @@
       "deprecated":false,
       "secret":false,
       "description":"DB Catalog"
+    },
+    "sql":{
+      "kind":"property",
+      "displayName":"SQL Statement",
+      "group":"common",
+      "required":true,
+      "type":"string",
+      "javaType":"java.lang.String",
+      "deprecated":false,
+      "secret":false,
+      "description":"SQL Statement to be executed. Can contain input parameters prefixed by a colon i.e. ':MYPARAMNAME'"
     }
   }
 }

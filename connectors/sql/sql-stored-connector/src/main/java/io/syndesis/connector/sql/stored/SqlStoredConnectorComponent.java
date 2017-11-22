@@ -22,15 +22,20 @@ import java.util.Properties;
 import org.apache.camel.Processor;
 import org.apache.camel.component.connector.DefaultConnectorComponent;
 
+import io.syndesis.connector.sql.SqlConnectorVerifierExtension;
+
 /**
  * Camel SqlStoredConnector connector
  */
 public class SqlStoredConnectorComponent extends DefaultConnectorComponent {
 
+    final static String COMPONENT_NAME  ="sql-stored-connector";
+    final static String COMPONENT_SCHEME="sql-stored-connector";
+
     public SqlStoredConnectorComponent() {
-        super("sql-stored-connector", "io.syndesis.connector.sql.stored.SqlStoredConnectorComponent");
-        registerExtension(SqlStoredConnectorVerifierExtension::new);
-        registerExtension(SqlStoredConnectorMetaDataExtension::new);
+        super(COMPONENT_NAME, SqlStoredConnectorComponent.class.getName());
+        registerExtension(new SqlConnectorVerifierExtension(COMPONENT_SCHEME));
+        registerExtension(new SqlStoredConnectorMetaDataExtension());
     }
 
     @Override
@@ -49,7 +54,7 @@ public class SqlStoredConnectorComponent extends DefaultConnectorComponent {
         final Processor processor = exchange -> {
             @SuppressWarnings("unchecked")
             Map<String,Object> map = (Map<String,Object>) exchange.getIn().getBody();
-            String jsonBean = JSONBeanUtil.mapToJSONBean(map);
+            String jsonBean = JSONBeanUtil.toJSONBean(map);
             exchange.getIn().setBody(jsonBean);
         };
         return processor;

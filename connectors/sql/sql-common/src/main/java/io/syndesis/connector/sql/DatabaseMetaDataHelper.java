@@ -18,39 +18,29 @@ package io.syndesis.connector.sql;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.JDBCType;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.apache.camel.component.extension.metadata.AbstractMetaDataExtension;
-import org.apache.camel.component.extension.metadata.DefaultMetaData;
+public class DatabaseMetaDataHelper {
 
-import io.syndesis.connector.sql.DatabaseProduct;
-
-public class SqlMetaData {
-
-
-
-    protected String getDefaultSchema(final String databaseProductName, final Map<String, Object> parameters) {
+    public static String getDefaultSchema(final String databaseProductName, String dbUser) {
 
         String defaultSchema = null;
         // Oracle uses the username as schema
         if (databaseProductName.equalsIgnoreCase(DatabaseProduct.ORACLE.name())) {
-            defaultSchema = parameters.get("user").toString();
+            defaultSchema = dbUser;
         } else if (databaseProductName.equalsIgnoreCase(DatabaseProduct.POSTGRESQL.name())) {
             defaultSchema = "public";
         } else if (databaseProductName.equalsIgnoreCase(DatabaseProduct.APACHE_DERBY.nameWithSpaces())) {
-            if (parameters.get("user") != null) {
-                defaultSchema = parameters.get("user").toString().toUpperCase();
+            if (dbUser != null) {
+                defaultSchema = dbUser.toUpperCase();
             } else {
                 defaultSchema = "NULL";
             }
@@ -58,7 +48,7 @@ public class SqlMetaData {
         return defaultSchema;
     }
 
-    /* default */ static ResultSet fetchProcedureColumns(final DatabaseMetaData meta, final String catalog,
+    public static ResultSet fetchProcedureColumns(final DatabaseMetaData meta, final String catalog,
         final String schema, final String procedureName) throws SQLException {
         if (meta.getDatabaseProductName().equalsIgnoreCase(DatabaseProduct.POSTGRESQL.name())) {
             return meta.getFunctionColumns(catalog, schema, procedureName, null);
@@ -67,7 +57,7 @@ public class SqlMetaData {
         return meta.getProcedureColumns(catalog, schema, procedureName, null);
     }
 
-    /* default */ static ResultSet fetchProcedures(final DatabaseMetaData meta, final String catalog,
+    public static ResultSet fetchProcedures(final DatabaseMetaData meta, final String catalog,
         final String schemaPattern, final String procedurePattern) throws SQLException {
         if (meta.getDatabaseProductName().equalsIgnoreCase(DatabaseProduct.POSTGRESQL.name())) {
             return meta.getFunctions(catalog, schemaPattern, procedurePattern);
@@ -75,6 +65,7 @@ public class SqlMetaData {
 
         return meta.getProcedures(catalog, schemaPattern, procedurePattern);
     }
+    
     
     /* default */ static Set<String> fetchTables(final DatabaseMetaData meta, final String catalog,
         final String schemaPattern, final String tableNamePattern) throws SQLException {
@@ -90,4 +81,49 @@ public class SqlMetaData {
             final String schema, final String tableName, final String columnName) throws SQLException {
 
         return meta.getColumns(catalog, schema, tableName, columnName);
-    }}
+    }
+
+    /* default */ static List<SqlParam> getJDBCInfoByColumnNames(final DatabaseMetaData meta, String catalog, 
+            String schema, String tableName, final List<SqlParam> params) throws SQLException {
+        List<SqlParam> paramList = new ArrayList<>();
+        for (int i=0; i<params.size(); i++) {
+            SqlParam param = params.get(i);
+            String columnName = param.getColumn();
+            ResultSet column = meta.getColumns(catalog, schema, tableName, columnName);
+            column.next();
+            param.setJdbcType(JDBCType.valueOf(column.getInt("DATA_TYPE")));
+            paramList.add(param);
+        }
+        return paramList;
+    }
+
+    /* default */ static List<SqlParam> getJDBCInfoByColumnOrder(final DatabaseMetaData meta, String catalog, 
+            String schema, String tableName, final List<SqlParam> params) throws SQLException {
+        List<SqlParam> paramList = new ArrayList<>();
+        ResultSet columnSet = meta.getColumns(catalog, "SA", tableName, null);
+        for (int i=0; i<params.size(); i++) {
+            columnSet.next();
+            SqlParam param = params.get(i);
+            param.setColumn(columnSet.getString("COLUMN_NAME"));
+            param.setJdbcType(JDBCType.valueOf(columnSet.getInt("DATA_TYPE")));
+            paramList.add(param);
+        }
+        return paramList;
+    }
+
+    /* default */ static List<SqlParam> getOutputColumnInfo(final Connection connection, 
+            final String sqlSelectStatement) throws SQLException {
+        List<SqlParam> paramList = new ArrayList<>();
+        Statement stmt = connection.createStatement();
+        ResultSet resultSet = stmt.executeQuery(sqlSelectStatement);
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        if (metaData.getColumnCount()>0){
+            for (int i=1; i<=metaData.getColumnCount(); i++) {
+                SqlParam param = new SqlParam(metaData.getColumnName(i));
+                param.setJdbcType(JDBCType.valueOf(metaData.getColumnType(i)));
+                paramList.add(param);
+            }
+        }
+        return paramList;
+    }
+}

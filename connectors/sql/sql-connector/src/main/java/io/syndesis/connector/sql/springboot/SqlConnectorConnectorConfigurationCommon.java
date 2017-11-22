@@ -16,10 +16,6 @@ public class SqlConnectorConnectorConfigurationCommon {
      */
     private DataSource dataSource;
     /**
-     * Delay in milli seconds between scheduling (executing)
-     */
-    private long schedulerPeriod = 1000L;
-    /**
      * DB User Name
      */
     private String user;
@@ -39,6 +35,11 @@ public class SqlConnectorConnectorConfigurationCommon {
      * DB Catalog
      */
     private String catalog;
+    /**
+     * SQL Statement to be executed. Can contain input parameters prefixed by a
+     * colon i.e. ':MYPARAMNAME'
+     */
+    private String sql;
 
     public DataSource getDataSource() {
         return dataSource;
@@ -46,14 +47,6 @@ public class SqlConnectorConnectorConfigurationCommon {
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
-    }
-
-    public long getSchedulerPeriod() {
-        return schedulerPeriod;
-    }
-
-    public void setSchedulerPeriod(long schedulerPeriod) {
-        this.schedulerPeriod = schedulerPeriod;
     }
 
     public String getUser() {
@@ -94,5 +87,13 @@ public class SqlConnectorConnectorConfigurationCommon {
 
     public void setCatalog(String catalog) {
         this.catalog = catalog;
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public void setSql(String sql) {
+        this.sql = sql;
     }
 }

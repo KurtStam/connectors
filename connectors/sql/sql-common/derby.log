@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed Nov 22 15:50:47 EST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015f-e57f-52b8-00000e23b6d0 
+on database directory memory:/Users/kstam/git/rh/syndesis/connectors/connectors/sql/sql-common/testdb with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/Users/kstam/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_131-b11
+user.dir=/Users/kstam/git/rh/syndesis/connectors/connectors/sql/sql-common
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.13.1
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

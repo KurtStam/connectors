@@ -16,7 +16,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <camel.version>2.21.0-SNAPSHOT</camel.version>
   </properties>
 
   <dependencyManagement>
@@ -119,6 +118,13 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-stream</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.syndesis</groupId>
+      <artifactId>sql-common</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>

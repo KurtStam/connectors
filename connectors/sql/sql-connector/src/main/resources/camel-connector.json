@@ -14,10 +14,9 @@
   "labels" : [ "sql" ],
   "inputDataType" : "none",
   "outputDataType" : "json",
-  "pattern" : "From",
-  "scheduler" : "timer",
+  "pattern" : "To",
   "componentOptions" : [ "dataSource" ],
-  "endpointOptions" : [ "schedulerPeriod" ],
+  "endpointOptions" : [ "sql" ],
   "connectorProperties" : {
     "user" : {
       "kind" : "property",
@@ -78,6 +77,18 @@
       "deprecated" : false,
       "secret" : false,
       "description" : "DB Catalog"
+    },
+      "sql" : {
+      "kind" : "property",
+      "displayName" : "SQL Statement",
+      "group": "common",
+      "label" : "",
+      "required" : true,
+      "type" : "string",
+      "javaType" : "java.lang.String",
+      "deprecated" : false,
+      "secret" : false,
+      "description" : "SQL Statement to be executed. Can contain input parameters prefixed by a colon, i.e. ':MYPARAMNAME'"
     }
   }
 }
